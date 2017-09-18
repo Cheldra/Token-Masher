@@ -5,7 +5,7 @@ python:
 script: python main.py
 
 deploy:
-  provider: releases
+  provider: pages
   skip_cleanup: true
   github_token: personal_access_token
   on:
