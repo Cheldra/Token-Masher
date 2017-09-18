@@ -1,10 +1,13 @@
 #TODO - Find out why nameless reverse-related field made for dinosaur
+#TODO - Generalise to handle mutliple sets from one file (e.g. from spoiler.xml) - DONE
+#TODO - Handle tokens named specific things - Ragavan rather than Monkey
+    #TODO - perhaps just search for matching type rather than look for the name?
 
 import re
 import requests
 
 presets = {
-    'setCode': 'XLN',
+    'setCode': 'spoiler',
 }
 
 
@@ -50,22 +53,26 @@ def parse_cards(card_list):
     return output_dict
 
 def extract_set(xml_file):
-    m = re.findall('(?<=<set>).*?(?=</set>)', xml_file, re.DOTALL)[0]
-    n = re.findall('(?<=<name>).*?(?=</name>)', m, re.DOTALL)[0]
-    print('SET: ', n)
-    return n
+    sets = []
+    m = re.findall('(?<=<set>).*?(?=</set>)', xml_file, re.DOTALL)
+    for set_slab in m:
+        n = re.findall('(?<=<name>).*?(?=</name>)', set_slab, re.DOTALL)[0]
+        sets.append(n)
+    print('SET: ', sets)
+    return sets
 
 def split_tokens(xml_file):
     m = re.findall('(?<=<card>).*?(?=</card>)', xml_file, re.DOTALL)
     return m
 
-def reduce_tokens(token_list, setCode):
+def reduce_tokens(token_list, setCodes):
     output_list = []
     for token in token_list:
         this_token_set_slab = re.findall('<set.*?</set>', token)[0]
         this_token_set = re.findall('(?<=>)[A-Za-z0-9]*?(?=<)', this_token_set_slab)[0].upper() #upper is extra redundancy
-        if this_token_set == setCode:
-            output_list.append(token)
+        for setCode in setCodes:
+            if this_token_set == setCode:
+                output_list.append(token)
     return output_list
 
 def mash_tokens(reduced_token_list, token_card_dict):
@@ -126,11 +133,12 @@ def open_cards_xml(setCode):
 if __name__ == '__main__':
     tokens_xml = open_tokens_xml()
     cards_xml = open_cards_xml(presets['setCode'])
+    sets = extract_set(cards_xml)
     card_list = split_cards(cards_xml)
     card_token_dict = parse_cards(card_list)
     inverted_token_card_dict = invert_dict(card_token_dict) #needed so that multiple cards can produce the same token
     token_list = split_tokens(tokens_xml)
-    reduced_token_list = reduce_tokens(token_list, presets['setCode'])
+    reduced_token_list = reduce_tokens(token_list, sets)
     mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict)
     write_new_xml(mashed_list, presets['setCode'] + '_tokens.xml')
     print card_token_dict
