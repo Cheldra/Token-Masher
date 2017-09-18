@@ -9,6 +9,7 @@
 #TODO - Find out why nameless reverse-related field made for dinosaur
 
 import re
+import requests
 
 presets = {
     'set': 'XLN',
@@ -118,9 +119,15 @@ def write_new_xml(token_list, file_name):
     with open(file_name, 'w') as f:
         f.write(file_text)
 
+def open_tokens_xml():
+    r = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
+    with open("raw_tokens.xml", 'w') as f:
+        f.write(r)
+    return r
+
 if __name__ == '__main__':
     cards_xml = read_xml(presets['input_file_name'])
-    tokens_xml = read_xml('tokens.xml')
+    tokens_xml = open_tokens_xml()
     if presets['set'] != '':
         setCode = extract_set(cards_xml)
     else: setCode = presets['set']
