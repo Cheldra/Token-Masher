@@ -88,7 +88,6 @@ def mash_tokens(reduced_token_list, token_card_dict):
                 for ass_card_name in ass_cards_names:
                     modified_token = modified_token + '\n\t\t\t<reverse-related>' + ass_card_name + '</reverse-related>'
                 modified_token = modified_token + '\n\t\t</card>\n'
-                print modified_token
                 modified_token_list.append(modified_token)
                 break
         else:
@@ -101,9 +100,6 @@ def  invert_dict(card_token_dict):
         for token_name in token_names:
             redundant_token_names_list.append(token_name)
     tokens_set = set(redundant_token_names_list)
-    print 'TOKENS SET: '
-    for token in tokens_set:
-        print token
     inverted_dict = {}
     for unique_token in tokens_set:
         ass_card_names = []
