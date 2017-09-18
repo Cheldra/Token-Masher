@@ -7,6 +7,6 @@ script: python main.py
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  github_token: personal_access_token
   on:
     branch: master
