@@ -6,6 +6,7 @@ script: bash ./deploy.sh
 
 deploy:
   provider: releases
+  file_glob: true
   skip_cleanup: true
   overwrite: true
   api_key:
