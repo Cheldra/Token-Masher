@@ -7,6 +7,5 @@ script: python main.py
 deploy:
   provider: releases
   skip_cleanup: true
-  github_token: personal_access_token
   on:
     branch: master
