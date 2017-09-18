@@ -7,3 +7,6 @@ Inputs:
   
 Output:
   * A setCode_tokens.xml file containing the tokens from the same set as the input, with added reverse-related fields
+
+Installation:
+  * Save setCode_tokens.xml file to your cockatrice customsets directory
