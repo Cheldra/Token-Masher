@@ -10,3 +10,7 @@ Output:
 
 Installation:
   * Save setCode_tokens.xml file to your cockatrice customsets directory
+
+Usage:
+  * Overwrite the setCode preset with the name of the matching file in https://github.com/Cockatrice/Magic-Spoiler/tree/files
+  * Note: the setCode.xml and raw_tokens are just caches created during running, and are not used as inputs
