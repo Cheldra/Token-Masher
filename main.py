@@ -1,18 +1,10 @@
-#TODO - handle one card making multiple diff tokens - DONE
-#TODO - handle tokens with more than one word names - DONE
-#TODO - handle 'X' after 'create' - DONE
-#TODO - default to the first listed set, but have an optional override - DONE
-#TODO - split up tokens_xml into individual tokens like split_cards - DONE
-#TODO - Reduce split tokens_xml to only those with matching set code - DONE
-#TODO - Write new reverse-related field - DONE
-#TODO - Output new tokens xml file - DONE
 #TODO - Find out why nameless reverse-related field made for dinosaur
 
 import re
 import requests
 
 presets = {
-    'set': 'XLN',
+    'setCode': 'XLN',
     'input_file_name': 'XLN.xml'
 }
 
@@ -125,18 +117,23 @@ def open_tokens_xml():
         f.write(r)
     return r
 
+def open_cards_xml(setCode):
+    r = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
+    with open(setCode + '.xml', 'w') as f:
+        f.write(r)
+    return r
+
+
 if __name__ == '__main__':
     cards_xml = read_xml(presets['input_file_name'])
     tokens_xml = open_tokens_xml()
-    if presets['set'] != '':
-        setCode = extract_set(cards_xml)
-    else: setCode = presets['set']
+    cards_xml = open_cards_xml(presets['setCode'])
     card_list = split_cards(cards_xml)
     card_token_dict = parse_cards(card_list)
     inverted_token_card_dict = invert_dict(card_token_dict) #needed so that multiple cards can produce the same token
     token_list = split_tokens(tokens_xml)
-    reduced_token_list = reduce_tokens(token_list, setCode)
+    reduced_token_list = reduce_tokens(token_list, presets['setCode'])
     mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict)
-    write_new_xml(mashed_list, setCode + '_tokens.xml')
+    write_new_xml(mashed_list, presets['setCode'] + '_tokens.xml')
     print card_token_dict
     pass

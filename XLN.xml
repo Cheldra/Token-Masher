@@ -2521,14 +2521,24 @@ Tap three untapped Vampires you control: Return Deathless Ancient from your grav
 -5: Create two tokens that are copies of Jace, Cunning Castaway, except they're not legendary.</text>			
 		</card>		
 		<card>			
+			<name>Treasure Cove</name>			
+			<set picURL="https://media.wizards.com/2017/xln/en_bdTtGwdBPz.png" rarity="Rare">XLN</set>			
+			<manacost/>			
+			<cmc>2</cmc>			
+			<type>Land</type>			
+			<tablerow>0</tablerow>			
+			<text>(Transforms from Treasure Map.)
+{T}: Add {C} to your mana pool.
+{T}, Sacrifice a Treasure: Draw a card.</text>			
+		</card>		
+		<card>			
 			<name>Treasure Map</name>			
-			<set picURL="http://media-dominaria.cursecdn.com/avatars/133/195/636395084690034175.png" rarity="Rare">XLN</set>			
+			<set picURL="https://media.wizards.com/2017/xln/en_y4nmM488Eh.png" rarity="Rare">XLN</set>			
 			<manacost>2</manacost>			
 			<cmc>2</cmc>			
 			<type>Artifact</type>			
 			<tablerow>1</tablerow>			
 			<text>{1}, {T}: Scry1. Put a landmark counter on Treasure Map. Then if there are three or more landmark counters on it, remove those counters, transform Treasure Map and create three colorless Treasure artifact tokens with &quot;{T}, Sacrifice this artifact: Add one mana of any color to your mana pool.&quot;</text>			
-			<related>Treasure Cove</related>			
 		</card>		
 		<card>			
 			<name>Sword-Point Diplomacy</name>			
@@ -2563,7 +2573,7 @@ Tap three untapped Vampires you control: Return Deathless Ancient from your grav
 			<tablerow>2</tablerow>			
 			<text>Other Dinosaurs you control have haste.
 
-When Regisaur Alpha enters the battlefield, create a 3/3 green Dinosaur Treefolk creature token with trample.</text>
+When Regisaur Alpha enters the battlefield, create a 3/3 green Dinosaur creature token with trample.</text>			
 		</card>		
 		<card>			
 			<name>Deathgorge Scavenger</name>			
@@ -2740,11 +2750,11 @@ Whenever a creature dies, you gain 1 life.</text>
 			<cmc>2</cmc>			
 			<color>B</color>			
 			<type>Creature — Human Pirate</type>			
-			<pt>2/1</pt>
+			<pt>2/1</pt>			
 			<tablerow>2</tablerow>			
-			<text>Menace
+			<text>Menace 
 
-Whenever Fathom Fleet Captain attacks, create a Lizard if you control another nontoken Pirate, you may pay {2}. If you do, create a 2/2 black Pirate Assassin creature token with menace. Also, create an cute Cat Wizard with flying.</text>
+Whenever Fathom Fleet Captain attacks, if you control another nontoken Pirate, you may pay {2}. If you do, create a 2/2 black Pirate creature token with menace.</text>			
 		</card>		
 		<card>			
 			<name>Boneyard Parley</name>			
@@ -3151,7 +3161,7 @@ Whenever you cast a creature spell of the chosen type, draw a card.</text>
 		</card>		
 		<card>			
 			<name>Rowdy Crew</name>			
-			<set picURL="https://media.wizards.com/2017/xln/en_N6hDAxf5ku.png" rarity="Mythic">XLN</set>			
+			<set picURL="https://media.wizards.com/2017/xln/en_N6hDAxf5ku.png" rarity="Mythic Rare">XLN</set>			
 			<manacost>2RR</manacost>			
 			<cmc>4</cmc>			
 			<color>R</color>			

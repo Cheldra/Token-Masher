@@ -83,6 +83,7 @@
             <text>Menace</text>
             <token>1</token>
 			<reverse-related>Vraska, Relic Seeker</reverse-related>
+			<reverse-related>Fathom Fleet Captain</reverse-related>
 		</card>
 		<card>
 			<name>Dinosaur</name>
@@ -98,6 +99,7 @@
 			<reverse-related>Thundering Spineback</reverse-related>
 			<reverse-related>Raptor Hatchling</reverse-related>
 			<reverse-related>Huatli, Warrior Poet</reverse-related>
+			<reverse-related>Regisaur Alpha</reverse-related>
 		</card>
 		<card>
 			<name>Illusion  </name>
