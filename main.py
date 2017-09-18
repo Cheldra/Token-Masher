@@ -11,7 +11,8 @@
 import re
 
 presets = {
-    'set': 'XLN'
+    'set': 'XLN',
+    'input_file_name': 'XLN.xml'
 }
 
 
@@ -122,7 +123,7 @@ def write_new_xml(token_list, file_name):
         f.write(file_text)
 
 if __name__ == '__main__':
-    cards_xml = read_xml('xln.xml')
+    cards_xml = read_xml(presets['input_file_name'])
     tokens_xml = read_xml('tokens.xml')
     if presets['set'] != '':
         setCode = extract_set(cards_xml)
@@ -135,11 +136,4 @@ if __name__ == '__main__':
     mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict)
     write_new_xml(mashed_list, setCode + '_tokens.xml')
     print card_token_dict
-
-#    m = re.findall('create.*?[A-Z][a-z]*? ', cards_xml, re.DOTALL)
-#    print(m)
-#    for i in m:
-#        print 'NEXT CARD:'
-#        print(i)
-#    print(len(m))
     pass
