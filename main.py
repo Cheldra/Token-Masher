@@ -5,7 +5,6 @@ import requests
 
 presets = {
     'setCode': 'XLN',
-    'input_file_name': 'XLN.xml'
 }
 
 
@@ -125,7 +124,6 @@ def open_cards_xml(setCode):
 
 
 if __name__ == '__main__':
-    cards_xml = read_xml(presets['input_file_name'])
     tokens_xml = open_tokens_xml()
     cards_xml = open_cards_xml(presets['setCode'])
     card_list = split_cards(cards_xml)
