@@ -1,8 +1,6 @@
 language: python
 python:
   - "2.7"
-install: 
- - pip install requirements.txt
 deploy:
   provider: pages
   skip_cleanup: true
