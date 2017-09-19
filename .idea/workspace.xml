@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca82541c-ddc8-4e58-8b35-a506a17da4c3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ca82541c-ddc8-4e58-8b35-a506a17da4c3" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="131" column="22" lean-forward="false" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="22" />
+            <state relative-caret-position="105">
+              <caret line="5" column="43" lean-forward="true" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
               <folding>
                 <element signature="e#443#452#0" expanded="true" />
               </folding>
@@ -26,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="191" column="19" lean-forward="false" selection-start-line="191" selection-start-column="19" selection-end-line="191" selection-end-column="19" />
+            <state relative-caret-position="42">
+              <caret line="65" column="14" lean-forward="true" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -53,6 +50,7 @@
       <find>input_file</find>
       <find>extrac</find>
       <find>print</find>
+      <find>works</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -490,6 +488,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2037">
           <caret line="97" column="12" lean-forward="false" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -505,6 +504,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18543">
           <caret line="883" column="40" lean-forward="true" selection-start-line="883" selection-start-column="40" selection-end-line="883" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -522,6 +522,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2079">
           <caret line="99" column="12" lean-forward="false" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -537,6 +538,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17745">
           <caret line="845" column="40" lean-forward="true" selection-start-line="845" selection-start-column="40" selection-end-line="845" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -562,6 +564,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17745">
           <caret line="845" column="40" lean-forward="true" selection-start-line="845" selection-start-column="40" selection-end-line="845" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -569,6 +572,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2079">
           <caret line="99" column="12" lean-forward="false" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -594,6 +598,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17745">
           <caret line="845" column="40" lean-forward="true" selection-start-line="845" selection-start-column="40" selection-end-line="845" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -601,6 +606,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2079">
           <caret line="99" column="12" lean-forward="true" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -608,6 +614,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="4" column="26" lean-forward="false" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -625,26 +632,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4242">
           <caret line="202" column="12" lean-forward="false" selection-start-line="202" selection-start-column="12" selection-end-line="202" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/IMA_tokens.xml" />
     <entry file="file://$PROJECT_DIR$/spoiler_tokens.xml" />
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="131" column="22" lean-forward="false" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="22" />
-          <folding>
-            <element signature="e#443#452#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="42">
+          <caret line="65" column="14" lean-forward="true" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="191" column="19" lean-forward="false" selection-start-line="191" selection-start-column="19" selection-end-line="191" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="105">
+          <caret line="5" column="43" lean-forward="true" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
+          <folding>
+            <element signature="e#443#452#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
