@@ -1,20 +1,16 @@
 #TODO - Find out why nameless reverse-related field made for dinosaur
-#TODO - Generalise to handle mutliple sets from one file (e.g. from spoiler.xml) - DONE
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
-#TODO - Write to XLN_tokens.xml and IMA_tokens.xml when both sets are in input - DONE
-#TODO - stop caching by default - DONE
-#TODO - allow for local input (non-default) - DONE
 #TODO - search inputs folder for a non-token xml, stop relying on inputFileName for local inputs
-#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder?
+#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder
 
 import re
 import requests
 
 presets = {
     'inputFileName': 'spoiler', #either a set code like 'XLN' or else 'spoiler'
-    'cacheInputs': True, #if true, saves the inputs to 'cache' folder
-    'tryLocalInputs': False #if true, tries to take input files from 'inputs' folder
+    'cacheInputs': False, #if true, saves the inputs to 'cache' folder
+    'tryLocalInputs': False #if true, tries to use local input files (local input files could be made by cacheInputs)
 }
 
 
@@ -124,31 +120,32 @@ def write_new_xml(token_list, file_name, sets):
                     this_set_text = this_set_text + token
                     all_sets_text = all_sets_text + token
         this_set_text = this_set_text + '\t</cards>\n</cockatrice_carddatabase>'
-        with open('out/' + set + '_tokens.xml', 'w') as f:
+        with open(set + '_tokens.xml', 'w') as f:
             f.write(this_set_text)
     if len(sets) > 1:
-        with open('out/' + file_name + '_tokens.xml', 'w') as f:
+        with open(file_name + '_tokens.xml', 'w') as f:
             f.write(all_sets_text)
 
 def open_tokens_xml(cacheInputs, tryLocalInputs):
     tokens_xml = ''
     if tryLocalInputs == True:
         try:
-            with open('inputs/tokens.xml', 'r') as f:
+            with open('tokens.xml', 'r') as f:
                 tokens_xml = f.read()
-            print "Using 'inputs/tokens.xml' as token source"
+            print "Using local 'tokens.xml' as token source"
         except IOError:
             try:
-                with open('inputs/raw_tokens.xml', 'r') as f:
+                with open('raw_tokens.xml', 'r') as f:
                     tokens_xml = f.read()
-                print "Using 'inputs/raw_tokens.xml' as token source"
+                print "Using local 'raw_tokens.xml' as token source"
             except IOError:
-                print "ERROR: Can't find tokens.xml or raw_tokens.xml in inputs folder, requesting from github..."
+                print "ERROR: Can't find tokens.xml or raw_tokens.xml locally, requesting from github..."
                 tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
     else:
         tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
     if cacheInputs == True:
-        with open('cache/raw_tokens.xml', 'w') as f:
+        print 'Saving raw_tokens.xml cache'
+        with open('raw_tokens.xml', 'w') as f:
             f.write(tokens_xml)
     return tokens_xml
 
@@ -156,17 +153,18 @@ def open_cards_xml(setCode, cacheInputs, tryLocalInput):
     cards_xml = ''
     if tryLocalInput == True:
         try:
-            with open('inputs/' + setCode + '.xml', 'r') as f:
+            with open(setCode + '.xml', 'r') as f:
                 cards_xml = f.read()
-            print 'Using inputs/' + setCode + '.xml as card source'
+            print 'Using local ' + setCode + '.xml as card source'
         except IOError:
-            print "ERROR: Cam't find " + setCode + ".xml in inputs folder, requesting from github..."
+            print "ERROR: Cam't find " + setCode + ".xml locally, requesting from github..."
             cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
 
     else:
         cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
     if cacheInputs == True:
-        with open('cache/' + setCode + '.xml', 'w') as f:
+        print ('Saving ' + setCode + '.xml cache')
+        with open(setCode + '.xml', 'w') as f:
             f.write(cards_xml)
     return cards_xml
 
