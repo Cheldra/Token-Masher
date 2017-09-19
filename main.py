@@ -3,7 +3,7 @@
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
 #TODO - Write to XLN_tokens.xml and IMA_tokens.xml when both sets are in input - DONE
-#TODO - allow for local input (non-default)
+#TODO - allow for local input (non-default) 
 
 import re
 import requests
