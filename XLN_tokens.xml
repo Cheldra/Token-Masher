@@ -55,6 +55,93 @@
 			<reverse-related>Prying Blade</reverse-related>
 		</card>
 		<card>
+			<name>Treasure</name>
+            <set picURL="https://media.wizards.com/2017/xln/en_1x8JYIHKSF_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_yQpDYPpsn4_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_N4n6GAhvNw_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_g59A1EKi9e_b.png">XLN</set>
+            <cmc>0</cmc>
+            <type>Token Artifact — Treasure</type>
+            <tablerow>1</tablerow>
+            <text>{T}, Sacrifice this artifact: Add one mana of any color to your mana pool.</text>
+            <token>1</token>
+			<reverse-related>Vraska, Relic Seeker</reverse-related>
+			<reverse-related>Dire Fleet Hoarder</reverse-related>
+			<reverse-related>Spell Swindle</reverse-related>
+			<reverse-related>Prosperous Pirates</reverse-related>
+			<reverse-related>Revel in Riches</reverse-related>
+			<reverse-related>Contract Killing</reverse-related>
+			<reverse-related>Sailor of Means</reverse-related>
+			<reverse-related>Ruthless Knave</reverse-related>
+			<reverse-related>Treasure Map</reverse-related>
+			<reverse-related>Wanted Scoundrels</reverse-related>
+			<reverse-related>Captain Lannery Storm</reverse-related>
+			<reverse-related>Heartless Pillage</reverse-related>
+			<reverse-related>Trove of Temptation</reverse-related>
+			<reverse-related>Pirate's Prize</reverse-related>
+			<reverse-related>Depths of Desire</reverse-related>
+			<reverse-related>Deadeye Plunderers</reverse-related>
+			<reverse-related>Prying Blade</reverse-related>
+		</card>
+		<card>
+			<name>Treasure</name>
+            <set picURL="https://media.wizards.com/2017/xln/en_1x8JYIHKSF_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_yQpDYPpsn4_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_N4n6GAhvNw_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_g59A1EKi9e_b.png">XLN</set>
+            <cmc>0</cmc>
+            <type>Token Artifact — Treasure</type>
+            <tablerow>1</tablerow>
+            <text>{T}, Sacrifice this artifact: Add one mana of any color to your mana pool.</text>
+            <token>1</token>
+			<reverse-related>Vraska, Relic Seeker</reverse-related>
+			<reverse-related>Dire Fleet Hoarder</reverse-related>
+			<reverse-related>Spell Swindle</reverse-related>
+			<reverse-related>Prosperous Pirates</reverse-related>
+			<reverse-related>Revel in Riches</reverse-related>
+			<reverse-related>Contract Killing</reverse-related>
+			<reverse-related>Sailor of Means</reverse-related>
+			<reverse-related>Ruthless Knave</reverse-related>
+			<reverse-related>Treasure Map</reverse-related>
+			<reverse-related>Wanted Scoundrels</reverse-related>
+			<reverse-related>Captain Lannery Storm</reverse-related>
+			<reverse-related>Heartless Pillage</reverse-related>
+			<reverse-related>Trove of Temptation</reverse-related>
+			<reverse-related>Pirate's Prize</reverse-related>
+			<reverse-related>Depths of Desire</reverse-related>
+			<reverse-related>Deadeye Plunderers</reverse-related>
+			<reverse-related>Prying Blade</reverse-related>
+		</card>
+		<card>
+			<name>Treasure</name>
+            <set picURL="https://media.wizards.com/2017/xln/en_1x8JYIHKSF_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_yQpDYPpsn4_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_N4n6GAhvNw_b.png">XLN</set>
+            <set picURL="https://media.wizards.com/2017/xln/en_g59A1EKi9e_b.png">XLN</set>
+            <cmc>0</cmc>
+            <type>Token Artifact — Treasure</type>
+            <tablerow>1</tablerow>
+            <text>{T}, Sacrifice this artifact: Add one mana of any color to your mana pool.</text>
+            <token>1</token>
+			<reverse-related>Vraska, Relic Seeker</reverse-related>
+			<reverse-related>Dire Fleet Hoarder</reverse-related>
+			<reverse-related>Spell Swindle</reverse-related>
+			<reverse-related>Prosperous Pirates</reverse-related>
+			<reverse-related>Revel in Riches</reverse-related>
+			<reverse-related>Contract Killing</reverse-related>
+			<reverse-related>Sailor of Means</reverse-related>
+			<reverse-related>Ruthless Knave</reverse-related>
+			<reverse-related>Treasure Map</reverse-related>
+			<reverse-related>Wanted Scoundrels</reverse-related>
+			<reverse-related>Captain Lannery Storm</reverse-related>
+			<reverse-related>Heartless Pillage</reverse-related>
+			<reverse-related>Trove of Temptation</reverse-related>
+			<reverse-related>Pirate's Prize</reverse-related>
+			<reverse-related>Depths of Desire</reverse-related>
+			<reverse-related>Deadeye Plunderers</reverse-related>
+			<reverse-related>Prying Blade</reverse-related>
+		</card>
+		<card>
 			<name>Vampire    </name>
             <set picURL="https://media.wizards.com/2017/xln/en_yZ9fZMu6x5_b.png">XLN</set>
             <color>W</color>

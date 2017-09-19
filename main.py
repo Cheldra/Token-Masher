@@ -2,12 +2,14 @@
 #TODO - Generalise to handle mutliple sets from one file (e.g. from spoiler.xml) - DONE
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
+#TODO - Write to XLN_tokens.xml and IMA_tokens.xml when both sets are in input - DONE
+#TODO - allow for local input (non-default)
 
 import re
 import requests
 
 presets = {
-    'setCode': 'spoiler',
+    'inputFileName': 'XLN', #either a set code like 'XLN' or else 'spoiler'
 }
 
 
@@ -109,13 +111,23 @@ def  invert_dict(card_token_dict):
         inverted_dict[unique_token] = ass_card_names
     return inverted_dict
 
-def write_new_xml(token_list, file_name):
-    file_text = '<?xml version="1.0" encoding="UTF-8"?>\n<cockatrice_carddatabase version="3">\n\t<cards>\n'
-    for token in token_list:
-        file_text = file_text + token
-    file_text = file_text + '\t</cards>\n</cockatrice_carddatabase>'
-    with open(file_name, 'w') as f:
-        f.write(file_text)
+def write_new_xml(token_list, file_name, sets):
+    all_sets_text = '<?xml version="1.0" encoding="UTF-8"?>\n<cockatrice_carddatabase version="3">\n\t<cards>\n'
+    for set in sets:
+        this_set_text = '<?xml version="1.0" encoding="UTF-8"?>\n<cockatrice_carddatabase version="3">\n\t<cards>\n'
+        for token in token_list:
+            sets_of_token_slabs = re.findall('(?<=<set).*?(?=/set)', token)
+            for set_of_token_slab in sets_of_token_slabs:
+                set_of_token = re.findall('(?<=>).*?(?=<)', set_of_token_slab)[0]
+                if set_of_token == set:
+                    this_set_text = this_set_text + token
+                    all_sets_text = all_sets_text + token
+        this_set_text = this_set_text + '\t</cards>\n</cockatrice_carddatabase>'
+        with open(set + '_tokens.xml', 'w') as f:
+            f.write(this_set_text)
+    if len(sets) > 1:
+        with open(file_name + '_tokens.xml', 'w') as f:
+            f.write(all_sets_text)
 
 def open_tokens_xml():
     r = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
@@ -132,7 +144,7 @@ def open_cards_xml(setCode):
 
 if __name__ == '__main__':
     tokens_xml = open_tokens_xml()
-    cards_xml = open_cards_xml(presets['setCode'])
+    cards_xml = open_cards_xml(presets['inputFileName'])
     sets = extract_set(cards_xml)
     card_list = split_cards(cards_xml)
     card_token_dict = parse_cards(card_list)
@@ -140,6 +152,6 @@ if __name__ == '__main__':
     token_list = split_tokens(tokens_xml)
     reduced_token_list = reduce_tokens(token_list, sets)
     mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict)
-    write_new_xml(mashed_list, presets['setCode'] + '_tokens.xml')
+    write_new_xml(mashed_list, presets['inputFileName'], sets)
     print card_token_dict
     pass
