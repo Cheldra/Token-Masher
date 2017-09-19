@@ -3,13 +3,18 @@
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
 #TODO - Write to XLN_tokens.xml and IMA_tokens.xml when both sets are in input - DONE
-#TODO - allow for local input (non-default) 
+#TODO - stop caching by default - DONE
+#TODO - allow for local input (non-default) - DONE
+#TODO - search inputs folder for a non-token xml, stop relying on inputFileName for local inputs
+#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder?
 
 import re
 import requests
 
 presets = {
-    'inputFileName': 'XLN', #either a set code like 'XLN' or else 'spoiler'
+    'inputFileName': 'spoiler', #either a set code like 'XLN' or else 'spoiler'
+    'cacheInputs': True, #if true, saves the inputs to 'cache' folder
+    'tryLocalInputs': False #if true, tries to take input files from 'inputs' folder
 }
 
 
@@ -17,10 +22,6 @@ def read_xml(name):
     with open(name, 'r') as f:
         output = f.read()
     return output
-
-def write_xml(xml_file, name):
-    with open(name, 'w') as f:
-        f.writelines(xml_file)
 
 def split_cards(xml_file):
     m = re.findall('(?<=<card>).*?(?=</card>)', xml_file, re.DOTALL)
@@ -60,7 +61,7 @@ def extract_set(xml_file):
     for set_slab in m:
         n = re.findall('(?<=<name>).*?(?=</name>)', set_slab, re.DOTALL)[0]
         sets.append(n)
-    print('SET: ', sets)
+    print('SETS: ', sets)
     return sets
 
 def split_tokens(xml_file):
@@ -123,28 +124,56 @@ def write_new_xml(token_list, file_name, sets):
                     this_set_text = this_set_text + token
                     all_sets_text = all_sets_text + token
         this_set_text = this_set_text + '\t</cards>\n</cockatrice_carddatabase>'
-        with open(set + '_tokens.xml', 'w') as f:
+        with open('out/' + set + '_tokens.xml', 'w') as f:
             f.write(this_set_text)
     if len(sets) > 1:
-        with open(file_name + '_tokens.xml', 'w') as f:
+        with open('out/' + file_name + '_tokens.xml', 'w') as f:
             f.write(all_sets_text)
 
-def open_tokens_xml():
-    r = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
-    with open("raw_tokens.xml", 'w') as f:
-        f.write(r)
-    return r
+def open_tokens_xml(cacheInputs, tryLocalInputs):
+    tokens_xml = ''
+    if tryLocalInputs == True:
+        try:
+            with open('inputs/tokens.xml', 'r') as f:
+                tokens_xml = f.read()
+            print "Using 'inputs/tokens.xml' as token source"
+        except IOError:
+            try:
+                with open('inputs/raw_tokens.xml', 'r') as f:
+                    tokens_xml = f.read()
+                print "Using 'inputs/raw_tokens.xml' as token source"
+            except IOError:
+                print "ERROR: Can't find tokens.xml or raw_tokens.xml in inputs folder, requesting from github..."
+                tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
+    else:
+        tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
+    if cacheInputs == True:
+        with open('cache/raw_tokens.xml', 'w') as f:
+            f.write(tokens_xml)
+    return tokens_xml
 
-def open_cards_xml(setCode):
-    r = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
-    with open(setCode + '.xml', 'w') as f:
-        f.write(r)
-    return r
+def open_cards_xml(setCode, cacheInputs, tryLocalInput):
+    cards_xml = ''
+    if tryLocalInput == True:
+        try:
+            with open('inputs/' + setCode + '.xml', 'r') as f:
+                cards_xml = f.read()
+            print 'Using inputs/' + setCode + '.xml as card source'
+        except IOError:
+            print "ERROR: Cam't find " + setCode + ".xml in inputs folder, requesting from github..."
+            cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
+
+    else:
+        cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
+    if cacheInputs == True:
+        with open('cache/' + setCode + '.xml', 'w') as f:
+            f.write(cards_xml)
+    return cards_xml
 
 
 if __name__ == '__main__':
-    tokens_xml = open_tokens_xml()
-    cards_xml = open_cards_xml(presets['inputFileName'])
+    tokens_xml = open_tokens_xml(presets['cacheInputs'], presets['tryLocalInputs'])
+    cards_xml = open_cards_xml(presets['inputFileName'], presets['cacheInputs'], presets['tryLocalInputs'])
     sets = extract_set(cards_xml)
     card_list = split_cards(cards_xml)
     card_token_dict = parse_cards(card_list)
