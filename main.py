@@ -1,9 +1,10 @@
-#TODO - Find out why nameless reverse-related field made for dinosaur
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
-#TODO - search inputs folder for a non-token xml, stop relying on inputFileName for local inputs - DONE
-#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder - DONE
 #TODO - detect if producing an empty setCode_tokens.xml file -> inform user, abort that set
+#TODO - optionally use mtgJSON + a set code as input instead of magic-spoiler?
+#TODO - when there is currently no token in tokens.xml for a given name & set, scrape scryfall for the token image
+#TODO - make it a user-friendly executable or something
+#TODO - if localInputs & installerMode - search customsets folder and use all xmls as input regardless of name
 
 import re
 import requests
