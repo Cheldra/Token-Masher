@@ -1,16 +1,23 @@
 #TODO - Find out why nameless reverse-related field made for dinosaur
 #TODO - Handle tokens named specific things - Ragavan rather than Monkey
     #TODO - perhaps just search for matching type rather than look for the name?
-#TODO - search inputs folder for a non-token xml, stop relying on inputFileName for local inputs
-#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder
+#TODO - search inputs folder for a non-token xml, stop relying on inputFileName for local inputs - DONE
+#TODO - automatically draw from customsets folder & local tokens.xml, write to customsets folder - DONE
+#TODO - detect if producing an empty setCode_tokens.xml file -> inform user, abort that set
 
 import re
 import requests
-
+import os
+# Reccommeded presets (updates your spoiler.xml and tokens.xml):
+#    'inputFileName' - 'spoiler'
+#    'cacheInputs' - True
+#    'tryLocalInputs - False
+#    'installerMode - True
 presets = {
     'inputFileName': 'spoiler', #either a set code like 'XLN' or else 'spoiler'
-    'cacheInputs': False, #if true, saves the inputs to 'cache' folder
-    'tryLocalInputs': False #if true, tries to use local input files (local input files could be made by cacheInputs)
+    'cacheInputs': True, #if true, saves the inputs (saves to AppData\Local\Cockatrice if installerMode also true)
+    'tryLocalInputs': False, #if true, tries to use offline input files; potentially made previously by cacheInputs
+    'installerMode': False #if true, operates from AppData\Local\Cockatrice\Cockatrice, rather than the current directory
 }
 
 
@@ -32,7 +39,6 @@ def parse_cards(card_list):
             text = text_list[0]
             token_slabs_single = re.findall('[C|c]reate.*?[A-WYZ][a-z]*', text) #produces slabs of words from creates to single token name
             token_slabs_double = re.findall('[C|c]reate.*?[A-WYZ][a-z]* [A-Z][a-z]*', text)
-            token_slabs_single
             tokens = []
             for token_slab in token_slabs_double:
                 words = token_slab.split()
@@ -89,7 +95,7 @@ def mash_tokens(reduced_token_list, token_card_dict):
                 modified_token_list.append(modified_token)
                 break
         else:
-            print 'ERROR: Could not find token named ' + unique_token+ ' for ' + str(ass_cards_names)
+            print 'ERROR: Could not find token named ' + unique_token + ' for ' + str(ass_cards_names)
     return modified_token_list
 
 def  invert_dict(card_token_dict):
@@ -108,7 +114,9 @@ def  invert_dict(card_token_dict):
         inverted_dict[unique_token] = ass_card_names
     return inverted_dict
 
-def write_new_xml(token_list, file_name, sets):
+
+def generate_xmls(token_list, file_name, sets):
+    xmls_list = []
     all_sets_text = '<?xml version="1.0" encoding="UTF-8"?>\n<cockatrice_carddatabase version="3">\n\t<cards>\n'
     for set in sets:
         this_set_text = '<?xml version="1.0" encoding="UTF-8"?>\n<cockatrice_carddatabase version="3">\n\t<cards>\n'
@@ -120,65 +128,105 @@ def write_new_xml(token_list, file_name, sets):
                     this_set_text = this_set_text + token
                     all_sets_text = all_sets_text + token
         this_set_text = this_set_text + '\t</cards>\n</cockatrice_carddatabase>'
-        with open(set + '_tokens.xml', 'w') as f:
-            f.write(this_set_text)
-    if len(sets) > 1:
-        with open(file_name + '_tokens.xml', 'w') as f:
-            f.write(all_sets_text)
+        xmls_list.append({'name': set + '_tokens.xml', 'xml': this_set_text, 'type': 'one set'})
+    all_sets_text = all_sets_text + '\t</cards>\n</cockatrice_carddatabase>'
+    xmls_list.append({'name': file_name + '_tokens.xml', 'xml': all_sets_text, 'type': 'all sets'})
+    return xmls_list
 
-def open_tokens_xml(cacheInputs, tryLocalInputs):
+def save_xmls(xmls_list, installerMode):
+    if installerMode == True:
+        for xml_dict in xmls_list:
+            if xml_dict['type'] == 'one set': #configured to save individual setCode_tokens.xml for each set
+                with open('customsets\\' + xml_dict['name'], 'w') as f:
+                    f.write(xml_dict['xml'])
+                    print 'Successfully installed ' + xml_dict['name']
+    else: #just saving to current folder
+        print 'Saving to ' + os.getcwdu()
+        for xml_dict in xmls_list:
+            with open(xml_dict['name'], 'w') as f:
+                f.write(xml_dict['xml'])
+
+def getCardsOnline(inputFileName):
+    return requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + inputFileName + '.xml').text.encode('utf-8')
+
+def getTokensOnline():
+    return requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
+
+
+def open_xmls(inputFileName, cacheInputs, tryLocalInputs, installerMode):
+    cards_xml = ''
     tokens_xml = ''
-    if tryLocalInputs == True:
+
+    if tryLocalInputs == False: #get files online
+        print 'Getting tokens.xml and ' + inputFileName + '.xml online'
+        cards_xml = getCardsOnline(inputFileName)
+        tokens_xml = getTokensOnline()
+    elif tryLocalInputs == True:
         try:
             with open('tokens.xml', 'r') as f:
+                print 'Found tokens.xml in ' + os.getcwdu() + '; using it as input'
                 tokens_xml = f.read()
-            print "Using local 'tokens.xml' as token source"
         except IOError:
+            print "ERROR: Can't find tokens.xml in " + os.getcwdu() + ", requesting from github..."
+            tokens_xml = getTokensOnline()
+        if installerMode == False:
             try:
-                with open('raw_tokens.xml', 'r') as f:
-                    tokens_xml = f.read()
-                print "Using local 'raw_tokens.xml' as token source"
+                with open(inputFileName + '.xml', 'r') as f:
+                    print 'Found ' + inputFileName + '.xml in ' + os.getcwdu() + ', using it as input'
+                    cards_xml = f.read()
             except IOError:
-                print "ERROR: Can't find tokens.xml or raw_tokens.xml locally, requesting from github..."
-                tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
-    else:
-        tokens_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Token/master/tokens.xml').text.encode('utf-8')
+                print "ERROR: Can't find " + inputFileName + ".xml in " + os.getcwdu() + ", requesting from github..."
+                cards_xml = getCardsOnline(inputFileName)
+        elif installerMode == True:
+            try:
+                with open('customsets\\' + inputFileName + '.xml', 'r') as f:
+                    print 'Found ' + inputFileName + '.xml in ' + os.getcwdu() + ', using it as input'
+                    cards_xml = f.read()
+            except IOError:
+                print "ERROR: Can't find " + inputFileName + ".xml in " + os.getcwdu() + "\customsets, requesting from github..."
+                cards_xml = getCardsOnline(inputFileName)
+
     if cacheInputs == True:
-        print 'Saving raw_tokens.xml cache'
-        with open('raw_tokens.xml', 'w') as f:
+        with open('tokens.xml', 'w') as f:
+            print 'Saving tokens.xml to ' + os.getcwdu()
             f.write(tokens_xml)
-    return tokens_xml
+        if installerMode == False:
+            with open(inputFileName + '.xml', 'w') as f:
+                print 'Saving ' + inputFileName + '.xml to ' + os.getcwdu()
+                f.write(cards_xml)
+        elif installerMode == True:
+            with open('customsets\\' + inputFileName + '.xml', 'w') as f:
+                print 'Saving ' + inputFileName + '.xml to ' + os.getcwdu() + '\customsets'
+                f.write(cards_xml)
 
-def open_cards_xml(setCode, cacheInputs, tryLocalInput):
-    cards_xml = ''
-    if tryLocalInput == True:
-        try:
-            with open(setCode + '.xml', 'r') as f:
-                cards_xml = f.read()
-            print 'Using local ' + setCode + '.xml as card source'
-        except IOError:
-            print "ERROR: Cam't find " + setCode + ".xml locally, requesting from github..."
-            cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
+    return cards_xml, tokens_xml
 
-    else:
-        cards_xml = requests.get('https://raw.githubusercontent.com/Cockatrice/Magic-Spoiler/files/' + setCode + '.xml').text.encode('utf-8')
-    if cacheInputs == True:
-        print ('Saving ' + setCode + '.xml cache')
-        with open(setCode + '.xml', 'w') as f:
-            f.write(cards_xml)
-    return cards_xml
-
+def moveToCockatriceFolder():
+    cockatrice_folder = os.getenv('LOCALAPPDATA') + '\Cockatrice\Cockatrice'
+    try:
+        os.chdir(cockatrice_folder)
+        print 'Successfully found cockatrice folder at ' + os.getcwdu()
+    except WindowsError:
+        print 'CRITICAL ERROR: Could not open cockatrice folder in: ' + cockatrice_folder
+        exit(1)
 
 if __name__ == '__main__':
-    tokens_xml = open_tokens_xml(presets['cacheInputs'], presets['tryLocalInputs'])
-    cards_xml = open_cards_xml(presets['inputFileName'], presets['cacheInputs'], presets['tryLocalInputs'])
+    if presets['installerMode'] == True: moveToCockatriceFolder()
+    cards_xml, tokens_xml = open_xmls(presets['inputFileName'], presets['cacheInputs'], presets['tryLocalInputs'], presets['installerMode'])
+    # Card input and analysis:
+    #cards_xml = open_cards_xml(presets['inputFileName'], presets['cacheInputs'], presets['tryLocalInputs'], presets['installerMode'])
     sets = extract_set(cards_xml)
     card_list = split_cards(cards_xml)
     card_token_dict = parse_cards(card_list)
     inverted_token_card_dict = invert_dict(card_token_dict) #needed so that multiple cards can produce the same token
-    token_list = split_tokens(tokens_xml)
-    reduced_token_list = reduce_tokens(token_list, sets)
-    mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict)
-    write_new_xml(mashed_list, presets['inputFileName'], sets)
     print card_token_dict
+    print inverted_token_card_dict
+    # Token input and processing:
+    #tokens_xml = open_tokens_xml(presets['cacheInputs'], presets['tryLocalInputs'])
+    token_list = split_tokens(tokens_xml)
+    reduced_token_list = reduce_tokens(token_list, sets) #trims to just the relevant sets
+    mashed_list = mash_tokens(reduced_token_list, inverted_token_card_dict) #adds the reverse-related field
+    # Dividing and saving the product:
+    generated_xmls_list = generate_xmls(mashed_list, presets['inputFileName'], sets)
+    save_xmls(generated_xmls_list, presets['installerMode'])
     pass
