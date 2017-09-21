@@ -18,7 +18,7 @@ presets = {
     'inputFileName': 'spoiler', #either a set code like 'XLN' or else 'spoiler'
     'cacheInputs': True, #if true, saves the inputs (saves to AppData\Local\Cockatrice if installerMode also true)
     'tryLocalInputs': False, #if true, tries to use offline input files; potentially made previously by cacheInputs
-    'installerMode': False #if true, operates from AppData\Local\Cockatrice\Cockatrice, rather than the current directory
+    'installerMode': True #if true, operates from AppData\Local\Cockatrice\Cockatrice, rather than the current directory
 }
 
 
@@ -230,4 +230,4 @@ if __name__ == '__main__':
     # Dividing and saving the product:
     generated_xmls_list = generate_xmls(mashed_list, presets['inputFileName'], sets)
     save_xmls(generated_xmls_list, presets['installerMode'])
-    pass
+    raw_input('Press Enter to close')
